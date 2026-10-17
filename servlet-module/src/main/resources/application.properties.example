@@ -1,0 +1,10 @@
+# Copy this file to  application.properties  (same folder) and edit the values.
+# application.properties is git-ignored so your password is never uploaded.
+# Environment variables DB_URL, DB_USER, DB_PASSWORD, UPLOAD_DIR override these values.
+
+db.url=jdbc:mysql://localhost:3306/student_portal?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+db.user=portal
+db.password=change_me
+
+# MUST be the SAME folder the PHP module saves files to (absolute path; use forward slashes on Windows).
+upload.dir=C:/xampp/htdocs/Student-Admission-Portal/php-module/uploads

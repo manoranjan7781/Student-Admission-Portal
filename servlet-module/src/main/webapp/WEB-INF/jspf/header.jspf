@@ -1,0 +1,40 @@
+<%--
+  Shared page header (included with a static <%@ include %> directive, so the variables
+  below are visible in the including page). The including page must define String pageTitle
+  BEFORE the include.
+  NOTE: JSP scriptlets do not escape output automatically; values are printed through HtmlUtil.escape().
+--%>
+<%@ page import="com.studentportal.model.User, com.studentportal.util.HtmlUtil, com.studentportal.util.CsrfUtil" %>
+<%
+    final String ctx = request.getContextPath();
+    final User currentUser = (User) session.getAttribute("user");
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= HtmlUtil.escape(pageTitle) %> | Admission Portal (Servlet)</title>
+  <link rel="stylesheet" href="<%= ctx %>/assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="<%= ctx %>/">Admission Portal &middot; Servlet</a>
+    <nav aria-label="Main">
+      <% if (currentUser != null) { %>
+        <a href="<%= ctx %>/students"><%= currentUser.isAdmin() ? "Students" : "My profile" %></a>
+        <span class="who"><%= HtmlUtil.escape(currentUser.getUsername()) %>
+          <span class="badge <%= HtmlUtil.escape(currentUser.getRole()) %>"><%= HtmlUtil.escape(currentUser.getRole()) %></span></span>
+        <!-- Logout is a POST with a CSRF token; the servlet then invalidates the session -->
+        <form action="<%= ctx %>/logout" method="post" class="inline">
+          <input type="hidden" name="csrfToken" value="<%= CsrfUtil.getToken(session) %>">
+          <button type="submit" class="linklike">Log out</button>
+        </form>
+      <% } else { %>
+        <a href="<%= ctx %>/login">Login</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+<main class="container">

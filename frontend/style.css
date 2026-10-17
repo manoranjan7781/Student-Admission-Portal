@@ -1,0 +1,184 @@
+/* =====================================================================
+   Student Admission Portal - shared stylesheet
+   Used by: frontend/index.html, the PHP pages and the JSP pages
+   (copied into php-module/assets and servlet-module/.../assets).
+   Mobile-first: base rules are for phones, @media blocks widen layouts.
+   ===================================================================== */
+
+/* ---- Design tokens: change the theme in ONE place ------------------- */
+:root {
+  --paper:    #eef2f1;   /* page background */
+  --card:     #ffffff;   /* panels */
+  --ink:      #14232b;   /* main text */
+  --muted:    #52646c;   /* secondary text (contrast 5.6:1 on white) */
+  --teal:     #0e5a5f;   /* primary brand colour */
+  --teal-dk:  #0a4044;   /* hover / dark panels */
+  --amber:    #e3a02f;   /* sparing accent: focus ring, active nav */
+  --line:     #cdd8d6;   /* borders */
+  --danger:   #b42318;
+  --danger-bg:#fdecea;
+  --ok:       #17724a;
+  --ok-bg:    #e5f4ec;
+  --radius:   10px;
+  --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --font-head: Georgia, "Times New Roman", serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.2; margin: 0 0 .5em; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.1rem; }
+a  { color: var(--teal); }
+a:hover { color: var(--teal-dk); }
+img { max-width: 100%; height: auto; }
+
+/* Keyboard users must always see where they are */
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+/* Visually hidden but readable by screen readers */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---- Top navigation bar ---------------------------------------------- */
+.site-header { background: var(--teal-dk); color: #fff; }
+.site-header .bar {
+  max-width: 1100px; margin: 0 auto; padding: .75rem 1rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem;
+}
+.brand { font-family: var(--font-head); font-size: 1.2rem; color: #fff; text-decoration: none; margin-right: auto; }
+.site-header nav { display: flex; flex-wrap: wrap; gap: .25rem .5rem; align-items: center; }
+.site-header nav a, .site-header nav button.linklike {
+  color: #dcecec; text-decoration: none; padding: .35rem .7rem; border-radius: 6px;
+  background: none; border: 0; font: inherit; cursor: pointer;
+}
+.site-header nav a:hover, .site-header nav button.linklike:hover { background: rgba(255,255,255,.12); color: #fff; }
+.site-header nav a[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--amber); color: #fff; }
+.who { color: #b9d3d3; font-size: .9rem; }
+
+/* ---- Layout containers ------------------------------------------------ */
+.container { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+.narrow    { max-width: 460px; }
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.page-title { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+.page-title h1 { margin: 0; }
+.muted { color: var(--muted); }
+
+/* ---- Buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-block; padding: .6rem 1.1rem; border-radius: 8px; border: 2px solid var(--teal);
+  background: var(--teal); color: #fff; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
+}
+.btn:hover { background: var(--teal-dk); border-color: var(--teal-dk); color: #fff; }
+.btn.secondary { background: transparent; color: var(--teal); }
+.btn.secondary:hover { background: #e2eeee; color: var(--teal-dk); }
+.btn.danger { background: var(--danger); border-color: var(--danger); }
+.btn.danger:hover { background: #8e1b12; border-color: #8e1b12; }
+.btn.small { padding: .3rem .7rem; font-size: .9rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+form.inline { display: inline; }
+
+/* ---- Alerts (flash messages & error summaries) --------------------------- */
+.alert { padding: .8rem 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid; }
+.alert.error   { background: var(--danger-bg); border-color: #f1b3ad; color: #7a1710; }
+.alert.success { background: var(--ok-bg);     border-color: #a9d9bd; color: #0f4d31; }
+.alert ul { margin: .3rem 0 0 1.2rem; padding: 0; }
+
+/* ---- Forms ---------------------------------------------------------------- */
+.form-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: .3rem; }
+.field label, .field .label { font-weight: 600; }
+.req { color: var(--danger); }
+.hint { color: var(--muted); font-size: .88rem; }
+.field input[type="text"], .field input[type="email"], .field input[type="password"],
+.field input[type="search"], .field select, .field input[type="file"] {
+  width: 100%; padding: .6rem .7rem; font: inherit; color: var(--ink);
+  background: #fff; border: 1.5px solid #8ea1a5; border-radius: 8px;
+}
+.field input:hover, .field select:hover { border-color: var(--teal); }
+.field input:focus, .field select:focus { border-color: var(--teal); outline: 3px solid rgba(227,160,47,.55); outline-offset: 0; }
+/* Validation states are set by script.js through aria-invalid / .is-valid */
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--danger); background: #fffafa; }
+.field input.is-valid, .field select.is-valid { border-color: var(--ok); }
+.error-msg { color: var(--danger); font-size: .9rem; min-height: 1.1em; margin: 0; }
+.pw-wrap { position: relative; }
+.pw-wrap input { padding-right: 4.5rem; }
+.pw-toggle {
+  position: absolute; right: .4rem; top: 50%; transform: translateY(-50%);
+  border: 0; background: none; color: var(--teal); font: inherit; font-weight: 600; cursor: pointer; padding: .3rem .5rem;
+}
+.strength { height: 6px; background: #dfe6e5; border-radius: 3px; overflow: hidden; }
+.strength > span { display: block; height: 100%; width: 0; background: var(--danger); transition: width .2s, background .2s; }
+.honeypot { position: absolute; left: -9999px; }  /* anti-bot field, hidden from humans */
+
+/* ---- Registration page layout (frontend/index.html) ------------------------- */
+.reg-layout { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
+.slip { background: var(--teal-dk); color: #eaf4f4; border-radius: var(--radius); padding: 1.5rem; }
+.slip h2 { color: #fff; }
+.slip p { color: #bcd6d6; }
+.checklist { list-style: none; margin: 1rem 0 0; padding: 0; }
+.checklist li { display: flex; gap: .6rem; align-items: center; padding: .45rem 0; border-top: 1px solid rgba(255,255,255,.14); }
+.checklist li::before {
+  content: ""; flex: 0 0 1.1rem; height: 1.1rem; border: 2px solid #8fb4b4; border-radius: 50%;
+}
+.checklist li.done { color: #fff; }
+.checklist li.done::before { background: var(--amber); border-color: var(--amber); box-shadow: inset 0 0 0 3px var(--teal-dk); }
+
+/* ---- Tables (student list, file metadata) ------------------------------------ */
+.table-wrap { overflow-x: auto; }               /* wide tables scroll instead of breaking layout */
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+th, td { text-align: left; padding: .65rem .75rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { background: #e3ebea; font-size: .92rem; }
+tbody tr:hover { background: #f6f9f8; }
+.actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: #dbe5e4; display: inline-block; }
+.avatar.ph { display: inline-flex; align-items: center; justify-content: center; color: var(--muted); font-weight: 700; }
+
+/* ---- Student profile ---------------------------------------------------------- */
+.profile { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.photo { width: 100%; max-width: 220px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: #dbe5e4; }
+dl.details { display: grid; grid-template-columns: max-content 1fr; gap: .4rem 1rem; margin: 0; }
+dl.details dt { font-weight: 600; color: var(--muted); }
+dl.details dd { margin: 0; overflow-wrap: anywhere; }
+.file-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+.file-list li { border: 1px solid var(--line); border-radius: 8px; padding: .8rem; display: grid; gap: .5rem; }
+.file-list img.preview { max-height: 180px; width: auto; border-radius: 6px; border: 1px solid var(--line); }
+.badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .8rem; font-weight: 600; background: #dcebea; color: var(--teal-dk); }
+.badge.admin { background: #f8e8c6; color: #6b4600; }
+
+/* ---- Student cards in the Servlet listing --------------------------------------- */
+.cards { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+.student-card { display: flex; gap: 1rem; align-items: center; }
+.student-card .avatar { width: 64px; height: 64px; flex: none; }
+
+.site-footer { text-align: center; color: var(--muted); font-size: .88rem; padding: 1.5rem 1rem; }
+
+/* ---- Wider screens ----------------------------------------------------------------- */
+@media (min-width: 700px) {
+  .form-grid.two { grid-template-columns: 1fr 1fr; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .profile { grid-template-columns: 240px 1fr; }
+}
+@media (min-width: 900px) {
+  .reg-layout { grid-template-columns: 320px 1fr; }
+  .slip { position: sticky; top: 1rem; }
+}
+
+/* Respect users who ask for less motion */
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

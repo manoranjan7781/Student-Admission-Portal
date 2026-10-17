@@ -1,0 +1,5 @@
+# Deny all direct web access (Apache 2.4) and never execute scripts here
+Require all denied
+<IfModule mod_php.c>
+  php_flag engine off
+</IfModule>

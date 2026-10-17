@@ -1,0 +1,16 @@
+# ---- Secrets & local configuration (never commit these) ----
+php-module/config/config.local.php
+servlet-module/src/main/resources/application.properties
+.env
+
+# ---- Uploaded student files (private data) ----
+php-module/uploads/*
+!php-module/uploads/.gitkeep
+!php-module/uploads/.htaccess
+
+# ---- Build output / IDE ----
+servlet-module/target/
+.idea/
+.vscode/
+*.log
+*.war

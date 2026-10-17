@@ -1,0 +1,2 @@
+# Deny all direct web access (Apache 2.4)
+Require all denied

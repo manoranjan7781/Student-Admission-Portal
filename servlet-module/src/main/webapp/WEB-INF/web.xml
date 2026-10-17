@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Deployment descriptor for Tomcat 10.1 (Jakarta Servlet 6.0).
+  Every <servlet-class> below must match a class in src/main/java/com/studentportal/servlet.
+-->
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+  <display-name>Student Admission Portal</display-name>
+
+  <!-- ===== Authentication filter: guards every URL (public paths are whitelisted inside the class) ===== -->
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>com.studentportal.filter.AuthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>   <!-- not applied to internal forwards, so error pages always render -->
+  </filter-mapping>
+
+  <!-- ===== Servlets and their URLs ===== -->
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.studentportal.servlet.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping><servlet-name>LoginServlet</servlet-name><url-pattern>/login</url-pattern></servlet-mapping>
+
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.studentportal.servlet.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping><servlet-name>LogoutServlet</servlet-name><url-pattern>/logout</url-pattern></servlet-mapping>
+
+  <servlet>
+    <servlet-name>StudentListServlet</servlet-name>
+    <servlet-class>com.studentportal.servlet.StudentListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping><servlet-name>StudentListServlet</servlet-name><url-pattern>/students</url-pattern></servlet-mapping>
+
+  <servlet>
+    <servlet-name>StudentProfileServlet</servlet-name>
+    <servlet-class>com.studentportal.servlet.StudentProfileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping><servlet-name>StudentProfileServlet</servlet-name><url-pattern>/student</url-pattern></servlet-mapping>
+
+  <servlet>
+    <servlet-name>FileServlet</servlet-name>
+    <servlet-class>com.studentportal.servlet.FileServlet</servlet-class>
+  </servlet>
+  <servlet-mapping><servlet-name>FileServlet</servlet-name><url-pattern>/file</url-pattern></servlet-mapping>
+
+  <!-- ===== Session settings ===== -->
+  <session-config>
+    <session-timeout>30</session-timeout>             <!-- minutes of inactivity -->
+    <cookie-config>
+      <http-only>true</http-only>                      <!-- JavaScript cannot read the session cookie -->
+      <!-- Add <secure>true</secure> when the site is served over HTTPS -->
+    </cookie-config>
+    <tracking-mode>COOKIE</tracking-mode>              <!-- never put the session id in the URL -->
+  </session-config>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!-- ===== Friendly error pages: no stack traces, no server version ===== -->
+  <error-page><error-code>400</error-code><location>/error.jsp</location></error-page>
+  <error-page><error-code>401</error-code><location>/error.jsp</location></error-page>
+  <error-page><error-code>403</error-code><location>/error.jsp</location></error-page>
+  <error-page><error-code>404</error-code><location>/error.jsp</location></error-page>
+  <error-page><error-code>500</error-code><location>/error.jsp</location></error-page>
+  <error-page><exception-type>java.lang.Throwable</exception-type><location>/error.jsp</location></error-page>
+</web-app>
